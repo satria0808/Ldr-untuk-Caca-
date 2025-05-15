@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -11,6 +10,7 @@
       font-family: 'Courier New', monospace;
       text-align: center;
       padding: 20px;
+      overflow: hidden;
     }
     h1 {
       font-size: 2.2em;
@@ -30,24 +30,62 @@
       font-size: 0.9em;
       color: #ad1457;
     }
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: floatUp 1s ease-out forwards;
+    }
+    .heart::before, .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-100px) scale(1.5);
+      }
+    }
   </style>
 </head>
-<body>
-  <h1>Hai Caca</h1>
-
-  <div class="love-note">
-    Ini web kecil yang aku buat sendiri buat kamu.  
-    Aku tahu LDR itu nggak gampang, tapi kamu selalu sabar dan tetap sayang sama aku.  
+<body onclick="spawnHearts(event)">
+  <h1>Hai Caca</h1>  <div class="love-note">
+    Ini web kecil yang aku buat sendiri buat kamu.<br>
+    Aku tahu LDR itu nggak gampang, tapi kamu selalu sabar dan tetap sayang sama aku.<br>
     Makasih ya Caca, kamu itu rumah paling nyaman buat aku.
-  </div>
-
-  <audio controls autoplay loop>
-    <source src="y2meta.vip - tentang perasaanku (speed up) (320 KBps).mp3" type="audio/mpeg" />
+  </div>  <audio controls autoplay loop>
+    <source src="lagu.mp3" type="audio/mpeg" />
     Browser kamu nggak mendukung pemutar musik.
-  </audio>
-
-  <div class="credit">
+  </audio>  <div class="credit">
     Dari Satria, buat Caca tersayang.
-  </div>
-</body>
+  </div>  <script>
+    function spawnHearts(event) {
+      for (let i = 0; i < 5; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.left = (event.clientX + Math.random()*50 - 25) + "px";
+        heart.style.top = (event.clientY + Math.random()*50 - 25) + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 1000);
+      }
+    }
+  </script></body>
 </html>
